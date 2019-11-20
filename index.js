@@ -46,14 +46,12 @@ export default class OTPInputView extends Component {
     componentDidMount() {
         this.copyCodeFromClipBoardOnAndroid()
         this.bringUpKeyBoardIfNeeded()
-        this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.handleKeyboardDidHide)
     }
 
     componentWillUnmount() {
         if (this._timer) {
             clearInterval(this._timer)
         }
-        this.keyboardDidHideListener.remove()
     }
 
     copyCodeFromClipBoardOnAndroid = () => {
