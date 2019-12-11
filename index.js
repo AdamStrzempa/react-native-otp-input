@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, TextInput, TouchableWithoutFeedback, Clipboard, Keyboard, Platform } from 'react-native'
+import { View, TextInput, TouchableWithoutFeedback, Clipboard, Keyboard, Platform, AppState } from 'react-native'
 import PropTypes from 'prop-types'
 import styles from './styles'
 import { isAutoFillSupported } from './helpers/device'
@@ -46,9 +46,19 @@ export default class OTPInputView extends Component {
     componentDidMount() {
         this.copyCodeFromClipBoardOnAndroid()
         this.bringUpKeyBoardIfNeeded()
+        this.keyboardDidHideListener = Platform.OS == 'android' ? Keyboard.addListener('keyboardDidHide', this.handleKeyboardDidHide) : () => {}
+        AppState.addEventListener('change', this._handleAppStateChange);
     }
 
+    _handleAppStateChange = (nextAppState) => {
+        if (nextAppState === 'background') {
+            this.blurAllFields()
+        }
+      };
+
     componentWillUnmount() {
+        Platform.OS == 'android' && this.keyboardDidHideListener.remove()
+        AppState.removeEventListener('change', this._handleAppStateChange);
         if (this._timer) {
             clearInterval(this._timer)
         }
