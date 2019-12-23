@@ -119,6 +119,7 @@ export default class OTPInputView extends Component {
     }
 
     handleChangeText = (index, text) => {
+        if (text.length > 6) text = text.replace(/\s/g, '').match(/\d+/g)[0]
         const { onCodeFilled, pinCount } = this.props
         const digits = this.getDigits()
         let newdigits = digits.slice()
@@ -185,7 +186,7 @@ export default class OTPInputView extends Component {
         const { defaultTextFieldStyle } = styles
         const { selectedIndex, digits } = this.state
         return (
-            <View pointerEvents="none" key={index + "view"}>
+            <View key={index + "view"}>
                 <TextInput
                     underlineColorAndroid='rgba(0,0,0,0)'
                     style={selectedIndex === index ? [defaultTextFieldStyle, codeInputFieldStyle, codeInputHighlightStyle] : [defaultTextFieldStyle, codeInputFieldStyle]}
