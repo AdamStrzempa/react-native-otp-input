@@ -78,7 +78,7 @@ export default class OTPInputView extends Component {
         const digits = this.getDigits()
         const focusIndex = digits.length ? digits.length - 1 : 0
         if (focusIndex < pinCount && autoFocusOnLoad) {
-            this.focusField(focusIndex)
+            setTimeout(() => this.focusField(focusIndex), 150);
         }
     }
 
