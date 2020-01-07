@@ -14,6 +14,7 @@ export default class OTPInputView extends Component {
         autoFocusOnLoad: PropTypes.bool,
         code: PropTypes.string,
         secureTextEntry: PropTypes.bool,
+        isFocused: PropTypes.bool
     }
 
     static defaultProps = {
@@ -22,7 +23,8 @@ export default class OTPInputView extends Component {
         codeInputHighlightStyle: null,
         onCodeFilled: null,
         autoFocusOnLoad: true,
-        secureTextEntry: false
+        secureTextEntry: false,
+        isFocused: true
     }
 
     fields = []
@@ -37,7 +39,13 @@ export default class OTPInputView extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const { code } = this.props
+        const { code, isFocused } = this.props
+        if (nextProps.isFocused !== isFocused && nextProps.isFocused === false) {
+            if (this._timer) {
+                clearInterval(this._timer)
+            }
+        }
+        
         if (nextProps.code !== code) {
             this.setState({ digits: (nextProps.code === undefined ? [] : nextProps.code.split("")) })
         }
