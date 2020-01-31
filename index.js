@@ -190,7 +190,7 @@ export default class OTPInputView extends Component {
     }
 
     renderOneInputField = ( _ , index ) => {
-        const { codeInputFieldStyle, codeInputHighlightStyle, secureTextEntry } = this.props
+        const { codeInputFieldStyle, codeInputHighlightStyle, secureTextEntry, pinCount } = this.props
         const { defaultTextFieldStyle } = styles
         const { selectedIndex, digits } = this.state
         return (
@@ -209,6 +209,10 @@ export default class OTPInputView extends Component {
                     key={index}
                     selectionColor="#00000000"
                     secureTextEntry={secureTextEntry}
+                    onFocus={() => {
+                        let filledPinCount = digits.filter((digit) => { return (digit !== null && digit !== undefined) }).length
+                        this.focusField(Math.min(filledPinCount, pinCount - 1))
+                    }}
                 />
             </View>
         )
