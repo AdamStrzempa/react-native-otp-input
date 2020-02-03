@@ -210,8 +210,11 @@ export default class OTPInputView extends Component {
                     selectionColor="#00000000"
                     secureTextEntry={secureTextEntry}
                     onFocus={() => {
-                        let filledPinCount = digits.filter((digit) => { return (digit !== null && digit !== undefined) }).length
-                        this.focusField(Math.min(filledPinCount, pinCount - 1))
+                        if (this.props.isFocused) {
+                            let filledPinCount = digits.filter((digit) => { return (digit !== null && digit !== undefined) }).length
+                            if (filledPinCount !== pinCount) this.focusField(Math.min(filledPinCount, pinCount - 1))
+                        }
+                        
                     }}
                 />
             </View>
