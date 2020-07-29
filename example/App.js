@@ -8,7 +8,7 @@
  */
 
 import React from 'react'
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 
 import OTPInputView from '@twotalltotems/react-native-otp-input'
 
@@ -35,6 +35,9 @@ export default class App extends React.Component {
           onCodeFilled = {(code => {
               console.log(`Code is ${code}, you are good to go!`)
           })}
+          // placeholderCharacter={'*'}
+          // placeholderTextColor={'red'}
+          // selectionColor={"#03DAC6"}
         />
       </View>
     );
